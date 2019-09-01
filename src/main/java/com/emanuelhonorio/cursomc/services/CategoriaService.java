@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.emanuelhonorio.cursomc.domain.Categoria;
 import com.emanuelhonorio.cursomc.repositories.CategoriaRepository;
+import com.emanuelhonorio.cursomc.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class CategoriaService {
@@ -16,6 +17,7 @@ public class CategoriaService {
 	
 	public Categoria buscar(Integer categoriaId) {
 		Optional<Categoria> categoriaOpt = categoriaRep.findById(categoriaId);
-		return categoriaOpt.orElse(null);
+		return categoriaOpt.orElseThrow(() -> new ResourceNotFoundException("Recurso do tipo: " + Categoria.class.getName() + 
+				" não encontrado com id: " + categoriaId));
 	}
 }
